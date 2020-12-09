@@ -3,7 +3,7 @@ import "./App.css";
 import Canvas from "./components/canvas";
 
 var R = 20;
-var locations, visited;
+var locations, visited, root;
 var minX, maxX, minY, maxY;
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            graph: [[], [2, 3], [1], [1]]
+            graph: [[], [2, 3], [1, 6], [1,4,5], [3], [3], [2]]
         };
     }
 
@@ -66,6 +66,33 @@ class App extends Component {
         ctx.lineWidth = 4;
         ctx.strokeStyle = "#000000";
         ctx.strokeRect(0, 0, canvas.width, canvas.height);
+        this.plot(ctx, root);
+    };
+
+    plot = (ctx, node) => {
+        this.drawNode(ctx, node);
+        var edges = this.state.graph[node];
+        for(var j=0; j<edges.length; j++) {
+            if (locations[edges[j]][1] > locations[node][1]) {
+                this.plot(ctx, edges[j]);
+            }
+        }
+    };
+
+    drawNode = (ctx, node) => {
+        console.log(locations);
+        ctx.beginPath();
+        const centerX = locations[node][0] + 5*R - minX;
+        const centerY = 5*R + locations[node][1];
+        ctx.arc(centerX, centerY, R, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#0';
+        ctx.textAlign = 'center';
+        ctx.fillStyle = 'white';
+        ctx.font = '19px Tahoma'
+        ctx.fillText(node, centerX, centerY + 6);
+        ctx.stroke();
     };
 
     componentDidMount() {
@@ -73,7 +100,8 @@ class App extends Component {
                                 () => new Array(2));
         visited = new Array(this.state.graph.length).fill(0);
         minX = maxX = minY = maxY = 0;
-        this.dfs(1, null);
+        root = 1;
+        this.dfs(root, null);
         this.updateCanvas();
     }
 
