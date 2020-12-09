@@ -75,25 +75,38 @@ class App extends Component {
         for(var j=0; j<edges.length; j++) {
             if (locations[edges[j]][1] > locations[node][1]) {
                 this.plot(ctx, edges[j]);
+                this.drawEdge(ctx, node, edges[j]);
             }
         }
     };
 
     drawNode = (ctx, node) => {
-        console.log(locations);
         ctx.beginPath();
         const centerX = locations[node][0] + 5*R - minX;
         const centerY = 5*R + locations[node][1];
         ctx.arc(centerX, centerY, R, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'white';
         ctx.fill();
         ctx.lineWidth = 1;
         ctx.strokeStyle = '#0';
         ctx.textAlign = 'center';
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'black';
         ctx.font = '19px Tahoma'
         ctx.fillText(node, centerX, centerY + 6);
         ctx.stroke();
     };
+
+    drawEdge = (ctx, x, y) => {
+        const cX1 = locations[x][0] + 5*R - minX;
+        const cY1 = 5*R + locations[x][1];
+        const cX2 = locations[y][0] + 5*R - minX;
+        const cY2 = 5*R + locations[y][1];
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.moveTo(cX1, cY1 + R);
+        ctx.lineTo(cX2, cY2 - R);
+        ctx.stroke();
+    }
 
     componentDidMount() {
         locations = Array.from(Array(this.state.graph.length),
