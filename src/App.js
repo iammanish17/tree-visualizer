@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import "./App.css";
 import Canvas from "./components/canvas";
 
-var locations, visited, R=20;
+var R = 20;
+var locations, visited;
+var minX, maxX, minY, maxY;
 
 class App extends Component {
 
@@ -15,7 +17,7 @@ class App extends Component {
 
     dfs = (index, parent) => {
         visited[index] = 1;
-        if (parent == null) {
+        if (parent === null) {
             locations[index][0] = 0;
             locations[index][1] = 0;
         }
@@ -40,6 +42,12 @@ class App extends Component {
             }
             locations[index][1] = y + 5*R;
         }
+
+        minX = Math.min(locations[index][0], minX);
+        maxX = Math.max(locations[index][0], maxX);
+        minY = Math.min(locations[index][1], minY);
+        maxY = Math.max(locations[index][1], maxY);
+
         for(var i=0; i<this.state.graph[index].length; i++) {
             if (!visited[this.state.graph[index][i]]) {
                 this.dfs(this.state.graph[index][i], index);
@@ -47,12 +55,26 @@ class App extends Component {
         }
     };
 
+    updateCanvas = () => {
+        const canvas = document.querySelector("#canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = maxX - minX + 10*R;
+        canvas.height = maxY - minY + 10*R;
+        ctx.fillStyle = "black";
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.globalCompositeOperation = "source-over";
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "#000000";
+        ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    };
+
     componentDidMount() {
         locations = Array.from(Array(this.state.graph.length),
                                 () => new Array(2));
         visited = new Array(this.state.graph.length).fill(0);
+        minX = maxX = minY = maxY = 0;
         this.dfs(1, null);
-        console.log(locations);
+        this.updateCanvas();
     }
 
     render() {
