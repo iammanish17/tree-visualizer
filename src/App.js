@@ -11,7 +11,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            graph: [[], [2, 3], [1, 6], [1,4,5], [3], [3], [2]]
+            graph: [[], [2, 3], [1, 6], [1,4,5, 7], [3], [3], [2], [3]]
         };
     }
 
@@ -36,6 +36,10 @@ class App extends Component {
                 }
                 else if (!used.includes(x+5*R*j)) {
                     locations[index][0] = x + 5*R*j;
+                    break;
+                }
+                else if (!used.includes(x)) {
+                    locations[index][0] = x;
                     break;
                 }
                 j += 1;
