@@ -124,15 +124,10 @@ class App extends Component {
         this.updateCanvas();
     };
 
-    componentDidMount() {
-        this.handleCanvas();
-    }
-
     handleReroot = (id) => {
         const root = id;
         const graph = this.state.graph.slice();
         this.setState({ graph, root });
-        this.handleCanvas();
     };
 
     addNode = () => {
@@ -142,6 +137,15 @@ class App extends Component {
         this.setState({ graph, root });
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.root !== prevState.root) {
+            this.handleCanvas();
+        }
+    }
+
+    componentDidMount() {
+        this.handleCanvas();
+    }
 
     render() {
     return (
@@ -149,7 +153,7 @@ class App extends Component {
       <nav className="navbar navbar-dark bg-primary">
       <a className="navbar-brand"
         href="https://github.com/iammanish17/tree-visualizer"
-        >Tree Visualizer by manish {this.state.root}</a>
+        >Tree Visualizer by manish</a>
       </nav>
         <main role="main" className="container">
           <Canvas/>
