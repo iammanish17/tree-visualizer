@@ -113,20 +113,35 @@ class App extends Component {
         ctx.moveTo(cX1, cY1 + R);
         ctx.lineTo(cX2, cY2 - R);
         ctx.stroke();
-    }
-
-    handleReroot = (id) => {
-        console.log(id);
     };
 
-    componentDidMount() {
+    handleCanvas = () => {
         locations = Array.from(Array(this.state.graph.length),
                                 () => new Array(2));
         visited = new Array(this.state.graph.length).fill(0);
         minX = maxX = minY = maxY = 0;
         this.dfs(this.state.root, null);
         this.updateCanvas();
+    };
+
+    componentDidMount() {
+        this.handleCanvas();
     }
+
+    handleReroot = (id) => {
+        const root = id;
+        const graph = this.state.graph.slice();
+        this.setState({ graph, root });
+        this.handleCanvas();
+    };
+
+    addNode = () => {
+        const graph = this.state.graph.slice();
+        const root = this.state.root;
+        graph.push([]);
+        this.setState({ graph, root });
+    };
+
 
     render() {
     return (
@@ -134,12 +149,13 @@ class App extends Component {
       <nav className="navbar navbar-dark bg-primary">
       <a className="navbar-brand"
         href="https://github.com/iammanish17/tree-visualizer"
-        >Tree Visualizer by manish</a>
+        >Tree Visualizer by manish {this.state.root}</a>
       </nav>
         <main role="main" className="container">
           <Canvas/>
           <Display
             onReroot={this.handleReroot}
+            onNewNode={this.addNode}
             nodes={this.state.graph.length-1}
             root={this.state.root}
           />
