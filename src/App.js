@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Canvas from "./components/canvas";
 import Display from "./components/display";
+import Colors from "./components/colors";
 
 var R = 20;
 var locations, visited;
@@ -12,7 +13,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            graph: [[], [2, 3], [1, 6], [1,4,5, 7], [3], [3], [2], [3]],
+            graph: [[], [2, 3], [1], [1]],
+            color: ['black', 'white', 'white'],
             root: 1
         };
     }
@@ -92,14 +94,14 @@ class App extends Component {
         const centerX = locations[node][0] + 5*R - minX;
         const centerY = 5*R + locations[node][1];
         ctx.arc(centerX, centerY, R, 0, 2 * Math.PI, false);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = this.state.color[node-1];
         ctx.fill();
         ctx.lineWidth = 1;
-        ctx.strokeStyle = '#0';
         ctx.textAlign = 'center';
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = (ctx.fillStyle === '#ffffff') ? 'black' : 'white';
         ctx.font = '19px Tahoma'
         ctx.fillText(node, centerX, centerY + 6);
+        ctx.strokeStyle = '#0';
         ctx.stroke();
     };
 
@@ -115,6 +117,19 @@ class App extends Component {
         ctx.stroke();
     };
 
+    handleColorChange = (index) => {
+        const color = this.state.color.slice();
+        const name = color[index];
+        color[index] = (name == "white") ? "black" :
+                        (name == "black") ? "red" :
+                        (name == "red") ? "green" :
+                        (name == "green") ? "blue" :
+                        "white";
+        const root = this.state.root;
+        const graph = this.state.graph.slice();
+        this.setState({ graph, color, root });
+    };
+
     handleCanvas = () => {
         locations = Array.from(Array(this.state.graph.length),
                                 () => new Array(2));
@@ -127,18 +142,22 @@ class App extends Component {
     handleReroot = (id) => {
         const root = id;
         const graph = this.state.graph.slice();
-        this.setState({ graph, root });
+        const color = this.state.color;
+        this.setState({ graph, color, root });
     };
 
     addNode = () => {
         const graph = this.state.graph.slice();
         const root = this.state.root;
+        const color = this.state.color;
         graph.push([]);
-        this.setState({ graph, root });
+        color.push('white');
+        this.setState({ graph, color, root });
     };
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.state.root !== prevState.root) {
+        if (this.state.root !== prevState.root ||
+            this.state.color != prevState.color) {
             this.handleCanvas();
         }
     }
@@ -161,6 +180,10 @@ class App extends Component {
           onNewNode={this.addNode}
           nodes={this.state.graph.length-1}
           root={this.state.root}
+        />
+        <Colors
+            onColorChange={this.handleColorChange}
+            color={this.state.color}
         />
       </main>
           <Canvas/>

@@ -9,6 +9,10 @@
     margin-bottom: 6px;
 }
 
+.bbrd {
+    border-style: outset;
+}
+
 canvas { display: block; }
 
 .App-logo {
