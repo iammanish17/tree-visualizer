@@ -4,7 +4,7 @@ import Canvas from "./components/canvas";
 import Display from "./components/display";
 
 var R = 20;
-var locations, visited, root;
+var locations, visited;
 var minX, maxX, minY, maxY;
 
 class App extends Component {
@@ -115,6 +115,10 @@ class App extends Component {
         ctx.stroke();
     }
 
+    handleReroot = (id) => {
+        console.log(id);
+    };
+
     componentDidMount() {
         locations = Array.from(Array(this.state.graph.length),
                                 () => new Array(2));
@@ -135,8 +139,9 @@ class App extends Component {
         <main role="main" className="container">
           <Canvas/>
           <Display
-          nodes={this.state.graph.length-1}
-          root={this.state.root}
+            onReroot={this.handleReroot}
+            nodes={this.state.graph.length-1}
+            root={this.state.root}
           />
         </main>
       </React.Fragment>

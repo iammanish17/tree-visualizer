@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Display extends Component {
     render() {
-        const {nodes, root} = this.props;
+        const {onReroot, nodes, root} = this.props;
         return (
             <div>
             <div class="btn-toolbar mb-3" role="toolbar">
@@ -10,6 +10,7 @@ class Display extends Component {
                 <div class="btn-group btn-group-lg mr-2" role="group">
                 <button
                     type="button"
+                    onClick={() => onReroot(x+1)}
                     id={x+1}
                     class={x+1 === root ?
                         "btn btn-outline-secondary" :
@@ -19,7 +20,7 @@ class Display extends Component {
                 </div>
             ))}
             <div class="btn-group mr-2" role="group">
-            <button type="button" class="btn btn-success">+</button>
+            <button id="add" type="button" class="btn btn-success">+</button>
             </div>
             </div>
             </div>
