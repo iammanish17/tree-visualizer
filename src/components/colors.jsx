@@ -16,7 +16,7 @@ class Colors extends Component {
                     type="button"
                     className="btn btn-light"
                     style={{backgroundColor: name,
-                            color: (name=="white") ? "black": "white"
+                            color: (name==="white") ? "black": "white"
                         }}
                     onClick={() => onColorChange(index)}
                 >

@@ -121,10 +121,10 @@ class App extends Component {
     handleColorChange = (index) => {
         const color = this.state.color.slice();
         const name = color[index];
-        color[index] = (name == "white") ? "black" :
-                        (name == "black") ? "red" :
-                        (name == "red") ? "green" :
-                        (name == "green") ? "blue" :
+        color[index] = (name === "white") ? "black" :
+                        (name === "black") ? "red" :
+                        (name === "red") ? "green" :
+                        (name === "green") ? "blue" :
                         "white";
         const root = this.state.root;
         const graph = this.state.graph.slice();
@@ -139,6 +139,12 @@ class App extends Component {
         this.dfs(this.state.root, null);
         this.updateCanvas();
     };
+
+    handleEdge = () => {
+        var p = document.getElementById("input1").value;
+        var q = document.getElementById("input2").value;
+        console.log(p==="DEFAULT", q);
+    }
 
     handleReroot = (id) => {
         const root = id;
@@ -158,7 +164,7 @@ class App extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.root !== prevState.root ||
-            this.state.color != prevState.color) {
+            this.state.color !== prevState.color) {
             this.handleCanvas();
         }
     }
@@ -187,6 +193,8 @@ class App extends Component {
             color={this.state.color}
         />
         <Input
+        onEdgeAdd={this.handleEdge}
+        nodes={this.state.graph.length-1}
         />
 
       </main>
