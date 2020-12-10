@@ -7,7 +7,10 @@ class Display extends Component {
             <div>
             <div className="btn-toolbar mb-3" role="toolbar">
             {[...Array(nodes).keys()].map(x => (
-                <div className="btn-group btn-group-lg mr-2" role="group">
+                <div
+                key={"group"+x}
+                className="btn-group btn-group-lg mr-2"
+                role="group">
                 <button
                     type="button"
                     onClick={() => onReroot(x+1)}
@@ -20,7 +23,8 @@ class Display extends Component {
                 </div>
             ))}
             <div className="btn-group mr-2" role="group">
-            <button id="add" type="button" className="btn btn-success">+</button>
+            <button id="add" key="add" type="button" className="btn btn-success">
+            +</button>
             </div>
             </div>
             </div>
