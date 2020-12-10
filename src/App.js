@@ -131,8 +131,8 @@ class App extends Component {
     render() {
     return (
       <React.Fragment>
-      <nav class="navbar navbar-dark bg-primary">
-      <a class="navbar-brand"
+      <nav className="navbar navbar-dark bg-primary">
+      <a className="navbar-brand"
         href="https://github.com/iammanish17/tree-visualizer"
         >Tree Visualizer by manish</a>
       </nav>
