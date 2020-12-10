@@ -3,6 +3,7 @@ import "./App.css";
 import Canvas from "./components/canvas";
 import Display from "./components/display";
 import Colors from "./components/colors";
+import Input from "./components/input";
 
 var R = 20;
 var locations, visited;
@@ -185,6 +186,9 @@ class App extends Component {
             onColorChange={this.handleColorChange}
             color={this.state.color}
         />
+        <Input
+        />
+
       </main>
           <Canvas/>
 

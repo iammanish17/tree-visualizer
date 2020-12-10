@@ -13,6 +13,10 @@
     border-style: outset;
 }
 
+.shift {
+    padding-left: 500px;
+}
+
 canvas { display: block; }
 
 .App-logo {
