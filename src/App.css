@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+.center { padding: 20px; }
+
+canvas { display: block; }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

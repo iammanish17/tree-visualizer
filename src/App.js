@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Canvas from "./components/canvas";
+import Display from "./components/display";
 
 var R = 20;
 var locations, visited, root;
@@ -11,7 +12,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            graph: [[], [2, 3], [1, 6], [1,4,5, 7], [3], [3], [2], [3]]
+            graph: [[], [2, 3], [1, 6], [1,4,5, 7], [3], [3], [2], [3]],
+            root: 1
         };
     }
 
@@ -64,13 +66,14 @@ class App extends Component {
         const ctx = canvas.getContext("2d");
         canvas.width = maxX - minX + 10*R;
         canvas.height = maxY - minY + 10*R;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = "black";
         ctx.globalCompositeOperation = "destination-over";
         ctx.globalCompositeOperation = "source-over";
         ctx.lineWidth = 4;
         ctx.strokeStyle = "#000000";
         ctx.strokeRect(0, 0, canvas.width, canvas.height);
-        this.plot(ctx, root);
+        this.plot(ctx, this.state.root);
     };
 
     plot = (ctx, node) => {
@@ -117,16 +120,24 @@ class App extends Component {
                                 () => new Array(2));
         visited = new Array(this.state.graph.length).fill(0);
         minX = maxX = minY = maxY = 0;
-        root = 1;
-        this.dfs(root, null);
+        this.dfs(this.state.root, null);
         this.updateCanvas();
     }
 
     render() {
     return (
       <React.Fragment>
+      <nav class="navbar navbar-dark bg-primary">
+      <a class="navbar-brand"
+        href="https://github.com/iammanish17/tree-visualizer"
+        >Tree Visualizer by manish</a>
+      </nav>
         <main role="main" className="container">
           <Canvas/>
+          <Display
+          nodes={this.state.graph.length-1}
+          root={this.state.root}
+          />
         </main>
       </React.Fragment>
     );
