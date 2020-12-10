@@ -4,7 +4,10 @@
 
 .center { padding: 20px; }
 
-.bm { margin-bottom: 6px; }
+.bm {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
 
 canvas { display: block; }
 

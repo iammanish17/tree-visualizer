@@ -156,14 +156,15 @@ class App extends Component {
         >Tree Visualizer by manish</a>
       </nav>
         <main role="main" className="container">
+        <Display
+          onReroot={this.handleReroot}
+          onNewNode={this.addNode}
+          nodes={this.state.graph.length-1}
+          root={this.state.root}
+        />
+      </main>
           <Canvas/>
-          <Display
-            onReroot={this.handleReroot}
-            onNewNode={this.addNode}
-            nodes={this.state.graph.length-1}
-            root={this.state.root}
-          />
-        </main>
+
       </React.Fragment>
     );
   }
