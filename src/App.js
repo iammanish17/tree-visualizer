@@ -143,7 +143,29 @@ class App extends Component {
     handleEdge = () => {
         var p = document.getElementById("input1").value;
         var q = document.getElementById("input2").value;
-        console.log(p==="DEFAULT", q);
+        if (p === "DEFAULT" || q === "DEFAULT") {
+            document.getElementById("edge-msg").innerHTML =
+                "Select both edges first to add an edge!";
+        }
+        else {
+            if (this.state.graph[p].length && this.state.graph[q].length) {
+                document.getElementById("edge-msg").innerHTML =
+                    "Could not add that edge because the resulting graph wouldn't form a tree!";
+            }
+            else if (p === q) {
+                document.getElementById("edge-msg").innerHTML =
+                    "Cannot add a self-edge!";
+            }
+            else {
+                document.getElementById("edge-msg").innerHTML = " ";
+                var graph = this.state.graph.slice();
+                graph[p].push(q);
+                graph[q].push(p);
+                const root = this.state.root;
+                const color = this.state.color;
+                this.setState({ graph, color, root });
+            }
+        }
     }
 
     handleReroot = (id) => {
@@ -154,7 +176,7 @@ class App extends Component {
     };
 
     addNode = () => {
-        const graph = this.state.graph.slice();
+        var graph = this.state.graph.slice();
         const root = this.state.root;
         const color = this.state.color;
         graph.push([]);
@@ -164,7 +186,8 @@ class App extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.root !== prevState.root ||
-            this.state.color !== prevState.color) {
+            this.state.color !== prevState.color ||
+            this.state.graph !== prevState.graph) {
             this.handleCanvas();
         }
     }

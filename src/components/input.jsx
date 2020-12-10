@@ -4,6 +4,8 @@ class Input extends Component {
     render() {
         const { onEdgeAdd, nodes } = this.props;
         return (
+            <div>
+            <h5 className="shift" id="edge-msg"> </h5>
             <div className="btn-toolbar mb-3 shift" role="toolbar">
             <div className="btn-group mr-2" role="group">
             <select
@@ -34,6 +36,7 @@ class Input extends Component {
                 onClick={() => onEdgeAdd()}
                 value="Add Edge">
             </input>
+            </div>
             </div>
             </div>
         );
