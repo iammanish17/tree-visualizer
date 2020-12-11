@@ -11,9 +11,9 @@ class Info extends Component {
         ]
         return (
             <div className="alert alert-info" role="alert">
-            <h2 class="alert-heading"><a id="info">Info</a></h2>
-            {text.map(x => (
-                <h6 className="mb-2">{x}</h6>
+            <h2 id="info" className="alert-heading">Info</h2>
+            {text.map((x,index) => (
+                <h6 className="mb-2" key={"info"+index}>{x}</h6>
             ))}
 
             </div>

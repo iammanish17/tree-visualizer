@@ -7,7 +7,8 @@ class Navbar extends Component {
             <a className="navbar-brand mb-0 h1"
                 href="https://github.com/iammanish17/tree-visualizer">
             <img src="https://avatars3.githubusercontent.com/u/35730135"
-                width="20" height="20" class="d-inline-block align-top">
+                width="20" height="20" className="d-inline-block align-top"
+                alt="">
             </img>
         ⠀Tree Visualizer by manish</a>
             <div className="collapse navbar-collapse" id="navbarNav">
