@@ -14,8 +14,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            graph: [[], [2, 3], [1], [1]],
-            color: ['black', 'white', 'white'],
+            graph: [[], []],
+            color: ['black'],
             root: 1
         };
     }
@@ -118,6 +118,18 @@ class App extends Component {
         ctx.stroke();
     };
 
+    getTreeComponentFrom = (node, parent) => {
+        var result = [node];
+        for(var i=0; i<this.state.graph[node].length; i++) {
+            if (this.state.graph[node][i] !== parent) {
+                result = result.concat(
+                    this.getTreeComponentFrom(this.state.graph[node][i],node
+                    ));
+            }
+        }
+        return result;
+    };
+
     handleColorChange = (index) => {
         const color = this.state.color.slice();
         const name = color[index];
@@ -148,13 +160,17 @@ class App extends Component {
                 "Select both edges first to add an edge!";
         }
         else {
-            if (this.state.graph[p].length && this.state.graph[q].length) {
-                document.getElementById("edge-msg").innerHTML =
-                    "Could not add that edge because the resulting graph wouldn't form a tree!";
-            }
-            else if (p === q) {
+            if (p === q) {
                 document.getElementById("edge-msg").innerHTML =
                     "Cannot add a self-edge!";
+            }
+            else if (this.state.graph[p].includes(q)) {
+                document.getElementById("edge-msg").innerHTML =
+                    "That edge already exists!";
+            }
+            else if (this.getTreeComponentFrom(p, null).includes(q)) {
+                document.getElementById("edge-msg").innerHTML =
+                    "Could not add that edge as a tree cannot contain a cycle.";
             }
             else {
                 document.getElementById("edge-msg").innerHTML = " ";
@@ -166,6 +182,8 @@ class App extends Component {
                 this.setState({ graph, color, root });
             }
         }
+        document.getElementById('input1').value = "DEFAULT";
+        document.getElementById('input2').value = "DEFAULT";
     }
 
     handleReroot = (id) => {
