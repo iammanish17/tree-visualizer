@@ -1,5 +1,5 @@
 # tree-visualizer
-Plot trees using nodes and edges with re-rooting at any node and customizable colours. https://tree-visualizer.vercel.app/
+Plot trees by adding nodes and edges with re-rooting at any node and customizable colours. Try it [here!](https://tree-visualizer.vercel.app/)
 
 # Screenshot
 
