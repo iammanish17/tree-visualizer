@@ -17,6 +17,10 @@
     padding-left: 500px;
 }
 
+.space {
+    padding-left: 10px;
+}
+
 canvas { display: block; }
 
 .App-logo {

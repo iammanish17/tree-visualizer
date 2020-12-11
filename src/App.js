@@ -4,6 +4,8 @@ import Canvas from "./components/canvas";
 import Display from "./components/display";
 import Colors from "./components/colors";
 import Input from "./components/input";
+import Info from "./components/info";
+import Navbar from "./components/navbar";
 
 var R = 20;
 var locations, visited;
@@ -217,11 +219,7 @@ class App extends Component {
     render() {
     return (
       <React.Fragment>
-      <nav className="navbar navbar-dark bg-primary">
-      <a className="navbar-brand"
-        href="https://github.com/iammanish17/tree-visualizer"
-        >Tree Visualizer by manish</a>
-      </nav>
+        <Navbar/>
         <main role="main" className="container">
         <Display
           onReroot={this.handleReroot}
@@ -240,6 +238,7 @@ class App extends Component {
 
       </main>
           <Canvas/>
+          <Info/>
 
       </React.Fragment>
     );
